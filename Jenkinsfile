@@ -38,9 +38,9 @@ pipeline {
         stage('Deploy package on Local Tomcat 8090') {
             steps {
                 sh "echo Before Deploying"
-                sh "rm -rf /opt/tomcat/webapps/ABCtechnologies-1.0*"
+                sh "sudo rm -rf /opt/tomcat/webapps/ABCtechnologies-1.0*"
                 sh "echo Deploying "
-                sh "cp -rvf target/ABCtechnologies-1.0.war /opt/tomcat/webapps/"
+                sh "sudo cp -rvf target/ABCtechnologies-1.0.war /opt/tomcat/webapps/"
             }
 		}        
         stage("Docker build"){
