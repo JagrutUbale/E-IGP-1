@@ -10,27 +10,27 @@ pipeline {
 	} 
     
     stages {
-        stage('SCM Checkout') {
+        stage('SCM') {
             steps {
                 git 'https://github.com/JagrutUbale/E-IGP-1.git'
             }
 		}
-        stage('Maven Cleanup') {
+        stage('Cleanup') {
             steps {
                 sh "mvn -Dmaven.test.failure.ignore=true clean"
             }
 		}
-        stage('Maven Compile') {
+        stage('Compile') {
             steps {
                 sh "mvn -Dmaven.test.failure.ignore=true compile"
             }
 		}
-        stage('Maven Test') {
+        stage('Test') {
             steps {
                 sh "mvn -Dmaven.test.failure.ignore=true test"
             }
 		}
-        stage('Maven Build-package') {
+        stage('Build-Package') {
             steps {
                 sh "mvn -Dmaven.test.failure.ignore=true package"
             }
@@ -41,6 +41,9 @@ pipeline {
                 sh "sudo rm -rf /opt/tomcat/webapps/ABCtechnologies-1.0*"
                 sh "echo Deploying "
                 sh "sudo cp -rvf target/ABCtechnologies-1.0.war /opt/tomcat/webapps/"
+                sh "sudo /opt/tomcat/bin/shutdown.sh"
+                sh "sudo /opt/tomcat/bin/startup.sh"
+                sh "sh ./application-status.sh"
             }
 		}        
         stage("Docker build"){
