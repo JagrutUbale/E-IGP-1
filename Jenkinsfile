@@ -63,6 +63,11 @@ pipeline {
 				sh 'docker push jagrut13/e-igp-1'
 			}
 		}
+        stage("Docker Compose Deployment"){
+            steps {
+				sh 'docker-compose up --force-recreate -d'
+            }
+        }
+}
+}
 
-}
-}

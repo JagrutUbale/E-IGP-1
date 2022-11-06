@@ -1,9 +1,6 @@
 version: '3'
 services:
   e-igp-1:
-    image: e-igp-1
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: jagrut13/e-igp-1
     ports:
       - "9091:8080"
