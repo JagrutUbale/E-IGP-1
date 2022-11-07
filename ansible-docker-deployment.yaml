@@ -4,11 +4,10 @@
   become: true
   tasks:
     - name: "Install pip"
-      package: 
+      apt: 
         name: "python3-pip"
         state: present
-        update_cache: true
-
+            
     - name: Install Docker Module for Python
       pip:
         name: docker
@@ -21,3 +20,6 @@
         auto_remove: true
         ports:
           - "8181:80"
+
+# apt install python3-pip
+# pip3 install docker          
