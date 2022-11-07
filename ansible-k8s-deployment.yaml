@@ -1,0 +1,16 @@
+---
+ - hosts: lab-servers
+   tasks:
+     - name: Fetch the file from the javabuildserver to master
+       fetch: src=/home/devopsadmin/jenkins/workspace/Java-Mvn-Build-Docker-Pipeline/target/mvn-hello-world.war dest=buffer/ flat=yes
+
+     - name: Copy the file from master to devappserv
+       copy: src=target/ABCtechnologies-1.0.war dest=/opt/tomcat/webapps/
+
+        //         sh "echo Before Deploying"
+        //         sh "sudo rm -rf /opt/tomcat/webapps/ABCtechnologies-1.0*"
+        //         sh "echo Deploying "
+        //         sh "sudo cp -rvf target/ABCtechnologies-1.0.war /opt/tomcat/webapps/"
+        //         sh "sudo /opt/tomcat/bin/shutdown.sh"
+        //         sh "sudo /opt/tomcat/bin/startup.sh"
+        //         sh "sh ./application-status.sh"

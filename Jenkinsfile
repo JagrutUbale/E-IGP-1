@@ -71,14 +71,14 @@ pipeline {
 
 		stage("Deploy to K8s") {
 			steps {
-				sh "kubectl apply -f k8s-spring-boot-deployment.yml --kubeconfig="
+				sh "export KUBECONFIG=/home/edureka/.kube/admin.conf && kubectl apply -f k8s-spring-boot-deployment.yml --kubeconfig="
 			}
 		}
-        stage("Deploy to K8s Cluster") {
-            steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'kubernetes-master', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f k8s-mvn-deployment.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-    		}
-        }
+        // stage("Deploy to K8s Cluster") {
+        //     steps {
+        //         sshPublisher(publishers: [sshPublisherDesc(configName: 'kubernetes-master', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f k8s-mvn-deployment.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+    	// 	}
+        // }
 }
 }
 
