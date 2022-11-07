@@ -12,14 +12,15 @@
       pip:
         name: docker
 
-    - name: deploy war  container
+    - name: deploy war container
       docker_container:
         image: jagrut13/e-igp-1
         name: ansible-e-igp-1
         state: started
-        auto_remove: true
+        recreate: yes
         ports:
           - "9999:8080"
 
 # apt install python3-pip
 # pip3 install docker
+# ansible-playbook  -i hosts ansible-docker-deployment.yaml  -b
