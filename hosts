@@ -1,2 +1,9 @@
 [lab-servers]
-localhost ansible_user=edureka ansible_ssh_pass=DevOps12 ansible_sudo_pass=DevOps12
+172.31.7.182 ansible_user=edureka ansible_ssh_pass=DevOps12 ansible_sudo_pass=DevOps12
+172.31.21.7 ansible_user=edureka ansible_ssh_pass=DevOps12 ansible_sudo_pass=DevOps12
+
+[master]
+172.31.7.182 ansible_user=edureka ansible_ssh_pass=DevOps12 ansible_sudo_pass=DevOps12
+
+[slave]
+172.31.21.7 ansible_user=edureka ansible_ssh_pass=DevOps12 ansible_sudo_pass=DevOps12
