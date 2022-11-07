@@ -3,17 +3,14 @@
   hosts: slave
   become: true
   tasks:
-
     - name: "Install pip"
       package: 
         name: "python3-pip"
         state: present
         update_cache: true
-
     - name: Install Docker Module for Python
       pip3:
         name: docker
-
     - name: deploy nginx docker container
       docker_container:
         image: nginx:stable
