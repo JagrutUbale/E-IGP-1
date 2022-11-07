@@ -1,0 +1,68 @@
+---
+ - hosts: lab-servers
+   tasks:
+     - name: Fetch the file from the javabuildserver to master
+       fetch: src=/home/devopsadmin/jenkins/workspace/Java-Mvn-Build-Docker-Pipeline/target/mvn-hello-world.war dest=buffer/ flat=yes
+
+     - name: Copy the file from master to devappserv
+       copy: src=target/ABCtechnologies-1.0.war dest=/opt/tomcat/webapps/
+
+        //         sh "echo Before Deploying"
+        //         sh "sudo rm -rf /opt/tomcat/webapps/ABCtechnologies-1.0*"
+        //         sh "echo Deploying "
+        //         sh "sudo cp -rvf target/ABCtechnologies-1.0.war /opt/tomcat/webapps/"
+        //         sh "sudo /opt/tomcat/bin/shutdown.sh"
+        //         sh "sudo /opt/tomcat/bin/startup.sh"
+        //         sh "sh ./application-status.sh"
+
+    - name: Start and Enable Tomcat 10 on sever
+      systemd:
+        name: tomcat
+        state: started
+        daemon_reload: true
+
+- name: Restart tomcat
+  service:
+    name: tomcat8
+    state: restarted
+
+  - name: Remove Old packages
+    file:
+      path: "{{ item }}"
+      state: absent
+    ignore_errors: yes
+    with_items:
+        - "{{ common_path }}/webapps/{{ common_name }}"
+        - "{{ common_path }}/webapps/{{ common_name }}.war"
+        - "{{ common_path }}/temp"
+        - "{{ common_path }}/work"
+    
+  - name: Create temp and work
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: "{{ common_user }}"
+      group: "{{ common_user }}"
+    with_items:
+      - "{{ common_path }}/work"
+      - "{{ common_path }}/temp" 
+
+  - name: Copy new packages "{{ common_name }}.war"
+    copy:
+      src: "{{ package_path }}/{{ common_name }}.war"
+      dest: "{{ common_path }}/webapps/{{ common_name }}.war"
+      owner: "{{ common_user }}"
+      group: "{{ common_user }}"
+
+  - name: start tomcat service
+    systemd:
+      name: "{{ common_service }}"
+      state: started 
+
+   - name: Enable the tomcat service and start
+     become: yes
+     systemd:
+        name: tomcat
+        enabled: yes
+        state: started
+

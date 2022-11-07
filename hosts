@@ -1,0 +1,2 @@
+[lab-servers]
+localhost ansible_user=edureka ansible_ssh_pass=DevOps12 ansible_sudo_pass=DevOps12
